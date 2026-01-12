@@ -1,113 +1,269 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💗 情侣微醺抽卡</title>
-
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(180deg, #ffd1dc, #ffb6c1);
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.95);
-      width: 85%;
-      max-width: 360px;
-      padding: 28px 22px 32px;
-      border-radius: 24px;
-      text-align: center;
-      box-shadow: 0 18px 40px rgba(0,0,0,.15);
-      animation: fadeIn .5s ease;
-    }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: 22px;
-      color: #e85d75;
-    }
-
-    .text {
-      font-size: 17px;
-      line-height: 1.6;
-      color: #555;
-      min-height: 72px;
-      margin-bottom: 20px;
-    }
-
-    .count {
-      font-size: 13px;
-      color: #999;
-      margin-bottom: 18px;
-    }
-
-    button {
-      border: none;
-      background: linear-gradient(135deg, #ff6b81, #ff4757);
-      color: #fff;
-      font-size: 16px;
-      padding: 12px 28px;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255,71,87,.35);
-    }
-
-    button:active {
-      transform: scale(.96);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心跳回声 - 情侣增进感情游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .card-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card-content {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+        
+        .card-type {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .type-memory { background: rgba(255, 182, 193, 0.3); }
+        .type-truth { background: rgba(255, 99, 71, 0.3); }
+        .type-action { background: rgba(255, 215, 0, 0.3); }
+        
+        .buttons {
+            margin: 20px 0;
+        }
+        
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 25px;
+            margin: 0 10px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .draw-btn {
+            background: rgba(255, 105, 180, 0.3);
+            font-size: 1.1em;
+            padding: 15px 30px;
+        }
+        
+        .rules {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .rules h3 {
+            margin-bottom: 10px;
+        }
+        
+        .rules ul {
+            list-style-position: inside;
+            margin-left: 10px;
+        }
+        
+        .rules li {
+            margin: 8px 0;
+        }
+        
+        .drink-counter {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="card">
-    <h1>🍷 情侣微醺抽卡</h1>
-    <div id="text" class="text">
-      准备好了吗？<br>点一下，抽一张今晚的心动指令 💕
-    </div>
-    <div id="count" class="count">已抽：0 张</div>
-    <button id="btn">抽一张卡</button>
-  </div>
+    <div class="container">
+        <div class="header">
+            <h1>💖 心跳回声</h1>
+            <p>微醺时刻，让心更近一些</p>
+        </div>
+        
+        <div class="drink-counter">
+            今夜共饮: <span id="drinkCount">0</span> 口
+        </div>
+        
+        <div class="card-container">
+            <div id="welcomeMessage">
+                <h2>准备好开始浪漫之夜了吗？</h2>
+                <p>点击下方按钮抽取第一张卡牌</p>
+            </div>
+            <div id="cardDisplay" style="display: none;">
+                <div class="card-type" id="cardType"></div>
+                <div class="card-content" id="cardText"></div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="draw-btn" onclick="drawCard()">🎴 抽取卡牌</button>
+            <button onclick="completeAction()">✅ 完成挑战</button>
+            <button onclick="skipCard()">⏭️ 跳过卡牌</button>
+        </div>
+        
+        <div class="rules">
+            <h3>🎯 游戏规则</h3>
+            <ul>
+                <li><strong>粉色卡牌</strong> - 回忆美好，回答后共饮一口</li>
+                <li><strong>红色卡牌</strong> - 真心时刻，回答后共饮一口</li>
+                <li><strong>金色卡牌</strong> - 亲密挑战，完成后可选择性碰杯</li>
+                <li>不想回答可跳过，但需自饮一口</li>
+                <li>安全词：<em>"暂停"</em> - 随时停止游戏</li>
+            </ul>
+        </div>
+    </div>
 
-  <script>
-    const cards = [
-      "靠近一点，轻声告诉对方：我现在有点想你。",
-      "对视 10 秒，不许说话。",
-      "给对方一个拥抱，持续到你们都笑出来为止。",
-      "说一句你平时不好意思说的暧昧话。",
-      "轻轻摸一下对方的头，说一句安抚的话。",
-      "选择一个身体部位，轻轻触碰 3 秒。",
-      "贴近耳边，说一句只属于今晚的秘密。",
-      "一起喝一口酒，然后对视。",
-      "夸对方一个你平时很少说出口的优点。",
-      "慢慢靠近，停在只差一点点的位置。"
-    ];
+    <script>
+        // 卡牌数据库
+        const cards = {
+            memory: [
+                "第一次约会时，你对我第一印象是什么？",
+                "分享一件我们在一起时，你最想重来一次的瞬间。",
+                "说我一个让你心动的、不经意的细节。",
+                "我们一起旅行时，最搞笑的经历是什么？",
+                "喝一口酒，模仿一下我们第一次接吻前的表情。",
+                "我们第一次牵手是在什么时候？当时你心里在想什么？",
+                "分享一张手机里你最喜欢的我们的合照，并说说为什么。"
+            ],
+            truth: [
+                "在什么时候，你会觉得'就是我了'？",
+                "说一件你一直想做但还没敢对我做的事。",
+                "我哪个优点，让你觉得最能对抗未来的平淡？",
+                "用三个词形容我们在一起的'感觉'，并解释为什么。",
+                "闭上眼睛，用手指触摸我的脸，猜猜我现在是什么表情。",
+                "你最想和我一起实现的三个愿望是什么？",
+                "我做过最让你感动的一件事是什么？"
+            ],
+            action: [
+                "深情对视10秒，然后碰杯喝一口。",
+                "给对方一个持续至少5秒的拥抱。",
+                "喂对方喝一口酒。",
+                "获得一个'免罚权'，可以跳过任何一次不想回答的问题。",
+                "轻轻亲吻对方的手背。",
+                "为对方按摩肩膀1分钟。",
+                "一起喝个交杯酒，并说一句情话。"
+            ]
+        };
 
-    let deck = [];
-    let count = 0;
+        let drinkCount = 0;
 
-    const textEl = document.getElementById("text");
-    const countEl = document.getElementById("count");
-    const btn = document.getElementById("btn");
+        function drawCard() {
+            document.getElementById('welcomeMessage').style.display = 'none';
+            document.getElementById('cardDisplay').style.display = 'block';
+            
+            // 随机选择卡牌类型
+            const types = ['memory', 'truth', 'action'];
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            const cardList = cards[randomType];
+            const randomCard = cardList[Math.floor(Math.random() * cardList.length)];
+            
+            // 显示卡牌
+            const cardTypeElement = document.getElementById('cardType');
+            const cardTextElement = document.getElementById('cardText');
+            
+            cardTextElement.textContent = randomCard;
+            
+            // 设置卡牌类型样式和文字
+            switch(randomType) {
+                case 'memory':
+                    cardTypeElement.textContent = '💖 记忆回廊';
+                    cardTypeElement.className = 'card-type type-memory';
+                    break;
+                case 'truth':
+                    cardTypeElement.textContent = '❤️ 真心熔岩';
+                    cardTypeElement.className = 'card-type type-truth';
+                    break;
+                case 'action':
+                    cardTypeElement.textContent = '💛 亲密契约';
+                    cardTypeElement.className = 'card-type type-action';
+                    break;
+            }
+        }
 
-    function shuffle() {
-      deck = [...cards].sort(() => Math.random() - 0.5);
-    }
+        function completeAction() {
+            drinkCount++;
+            updateDrinkCount();
+            showMessage("太棒了！感情又升温啦～ 🥂");
+        }
 
-    shuffle();
+        function skipCard() {
+            drinkCount++;
+            updateDrinkCount();
+            showMessage("保留一点神秘感也不错哦～ 💫");
+        }
 
-    btn.onclick = () => {
-      if (deck.length === 0) {
+        function updateDrinkCount() {
+            document.getElementById('drinkCount').textContent = drinkCount;
+        }
+
+        function showMessage(message) {
+            alert(message);
+            // 自动准备下一张卡牌
+            setTimeout(() => {
+                if(confirm("继续抽取下一张卡牌吗？")) {
+                    drawCard();
+                }
+            }, 500);
+        }
+
+        // 初始化
+        updateDrinkCount();
+    </script>
+</body>
+</html>      if (deck.length === 0) {
         shuffle();
       }
       const card = deck.pop();
