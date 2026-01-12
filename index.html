@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>情侣升温 ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>情侣升温</title>
+
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      background: linear-gradient(180deg, #ffd6dc, #ffb6c1);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
-                   "Helvetica Neue", Arial, sans-serif;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 22px;
-      padding: 30px 25px;
-      width: 85%;
+      background: rgba(255,255,255,0.92);
+      border-radius: 24px;
+      padding: 36px 28px;
+      width: 82%;
       max-width: 360px;
       text-align: center;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
 
     h1 {
-      margin-top: 0;
       color: #e25555;
-      font-size: 26px;
+      margin-bottom: 12px;
     }
 
-    p {
+    .text {
       font-size: 16px;
       color: #444;
-      line-height: 1.7;
+      min-height: 48px;
+      margin-bottom: 24px;
+    }
+
+    .count {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 20px;
     }
 
     button {
-      margin-top: 22px;
-      padding: 12px 26px;
-      font-size: 16px;
-      border: none;
-      border-radius: 26px;
       background: #e25555;
+      border: none;
       color: white;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(226,85,85,0.4);
     }
 
-    button:active {
-      transform: scale(0.96);
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -59,26 +64,47 @@
 <body>
   <div class="card">
     <h1>❤️ 情侣升温 ❤️</h1>
-    <p id="text">
-      今天也要记得<br>
-      温柔地对待彼此。
-    </p>
-    <button onclick="changeText()">点我一下</button>
+    <div class="text" id="text">今天也值得被温柔以待。</div>
+    <div class="count" id="count">今天已陪伴：0 次</div>
+    <button id="btn">点我一下</button>
   </div>
 
   <script>
-    const words = [
-      "你被珍惜，本身就很重要。",
-      "爱不是用力，是靠近。",
+    const texts = [
+      "你不是一个人，我在。",
       "慢慢来，我们会走很远。",
-      "今天也值得被温柔以待。",
-      "你在，我就安心。"
+      "今晚的温柔属于你。",
+      "有我在的地方，你可以放心。",
+      "今天你已经做得很好了。"
     ];
 
-    function changeText() {
-      const i = Math.floor(Math.random() * words.length);
-      document.getElementById("text").innerText = words[i];
+    const today = new Date().toDateString();
+    const savedDate = localStorage.getItem("date");
+    let used = localStorage.getItem("used") === "true";
+
+    const textEl = document.getElementById("text");
+    const countEl = document.getElementById("count");
+    const btn = document.getElementById("btn");
+
+    if (savedDate !== today) {
+      localStorage.setItem("date", today);
+      localStorage.setItem("used", "false");
+      used = false;
     }
+
+    if (used) {
+      textEl.innerText = "今天已经完成陪伴啦，明天再来 🤍";
+      countEl.innerText = "今天已陪伴：1 次";
+      btn.disabled = true;
+    }
+
+    btn.onclick = () => {
+      const msg = texts[Math.floor(Math.random() * texts.length)];
+      textEl.innerText = msg;
+      countEl.innerText = "今天已陪伴：1 次";
+      localStorage.setItem("used", "true");
+      btn.disabled = true;
+    };
   </script>
 </body>
 </html>
