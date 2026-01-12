@@ -2,108 +2,158 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>情侣升温</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>心跳回声 · 微醺抽牌夜</title>
 
   <style>
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-      background: linear-gradient(180deg, #ffd6dc, #ffb6c1);
       min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .card {
-      background: rgba(255,255,255,0.92);
-      border-radius: 24px;
-      padding: 36px 28px;
-      width: 82%;
+      background: rgba(255,255,255,0.95);
+      width: 88%;
       max-width: 360px;
+      padding: 28px 22px;
+      border-radius: 24px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 0.6s ease;
     }
 
     h1 {
-      color: #e25555;
-      margin-bottom: 12px;
+      margin: 0 0 12px;
+      color: #e74c3c;
+      font-size: 22px;
     }
 
-    .text {
-      font-size: 16px;
-      color: #444;
-      min-height: 48px;
-      margin-bottom: 24px;
-    }
-
-    .count {
+    .subtitle {
       font-size: 14px;
-      color: #999;
+      color: #666;
       margin-bottom: 20px;
     }
 
+    .content {
+      font-size: 18px;
+      color: #333;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.6;
+      padding: 10px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
     button {
-      background: #e25555;
-      border: none;
-      color: white;
-      padding: 12px 28px;
+      flex: 1;
+      padding: 12px;
       border-radius: 999px;
-      font-size: 16px;
+      border: none;
+      font-size: 15px;
       cursor: pointer;
     }
 
-    button:disabled {
+    .draw {
+      background: #ff6f61;
+      color: white;
+    }
+
+    .drink {
+      background: #f1c40f;
+      color: #333;
+    }
+
+    .disabled {
       background: #ccc;
+      color: #666;
       cursor: not-allowed;
+    }
+
+    .count {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
   <div class="card">
-    <h1>❤️ 情侣升温 ❤️</h1>
-    <div class="text" id="text">今天也值得被温柔以待。</div>
-    <div class="count" id="count">今天已陪伴：0 次</div>
-    <button id="btn">点我一下</button>
+    <h1>💗 心跳回声</h1>
+    <div class="subtitle">微醺时刻，让心靠近一点</div>
+
+    <div class="content" id="content">
+      今晚的气氛，适合抽一张牌。
+    </div>
+
+    <div class="actions">
+      <button class="draw" id="drawBtn">抽一张牌</button>
+      <button class="drink" id="drinkBtn">🍷 喝一口</button>
+    </div>
+
+    <div class="count" id="count">
+      今晚已抽：0 张
+    </div>
   </div>
 
   <script>
-    const texts = [
-      "你不是一个人，我在。",
-      "慢慢来，我们会走很远。",
-      "今晚的温柔属于你。",
-      "有我在的地方，你可以放心。",
-      "今天你已经做得很好了。"
+    const cards = [
+      "靠近对方 10 秒，不说话。",
+      "对 TA 说一句你平时不敢说的真心话。",
+      "轻轻触碰对方的手 5 秒。",
+      "今晚由你先低头一次。",
+      "描述你最心动的一个瞬间。",
+      "给 TA 一个带点暧昧的称呼。",
+      "靠在一起，深呼吸三次。",
+      "轻声说一句：我在。",
+      "对视 15 秒，谁先躲谁喝。",
+      "分享一件你只想告诉 TA 的事。"
     ];
 
-    const today = new Date().toDateString();
-    const savedDate = localStorage.getItem("date");
-    let used = localStorage.getItem("used") === "true";
-
-    const textEl = document.getElementById("text");
+    const content = document.getElementById("content");
+    const drawBtn = document.getElementById("drawBtn");
+    const drinkBtn = document.getElementById("drinkBtn");
     const countEl = document.getElementById("count");
-    const btn = document.getElementById("btn");
 
-    if (savedDate !== today) {
+    let drawCount = Number(localStorage.getItem("drawCount") || 0);
+    let lastDate = localStorage.getItem("date");
+    const today = new Date().toDateString();
+
+    if (lastDate !== today) {
+      drawCount = 0;
       localStorage.setItem("date", today);
-      localStorage.setItem("used", "false");
-      used = false;
+      localStorage.setItem("drawCount", 0);
     }
 
-    if (used) {
-      textEl.innerText = "今天已经完成陪伴啦，明天再来 🤍";
-      countEl.innerText = "今天已陪伴：1 次";
-      btn.disabled = true;
-    }
+    countEl.innerText = `今晚已抽：${drawCount} 张`;
 
-    btn.onclick = () => {
-      const msg = texts[Math.floor(Math.random() * texts.length)];
-      textEl.innerText = msg;
-      countEl.innerText = "今天已陪伴：1 次";
-      localStorage.setItem("used", "true");
-      btn.disabled = true;
+    drawBtn.onclick = () => {
+      const card = cards[Math.floor(Math.random() * cards.length)];
+      content.innerText = card;
+      drawCount++;
+      localStorage.setItem("drawCount", drawCount);
+      countEl.innerText = `今晚已抽：${drawCount} 张`;
+    };
+
+    drinkBtn.onclick = () => {
+      content.innerText = "🍷 微醺一下，让感觉慢慢上来。";
     };
   </script>
 </body>
