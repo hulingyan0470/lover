@@ -2,93 +2,68 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>心跳回声 · 微醺抽牌夜</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💗 情侣微醺抽卡</title>
 
   <style>
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #ffd1dc, #ffb6c1);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
     }
 
     .card {
       background: rgba(255,255,255,0.95);
-      width: 88%;
+      width: 85%;
       max-width: 360px;
-      padding: 28px 22px;
+      padding: 28px 22px 32px;
       border-radius: 24px;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      animation: fadeIn 0.6s ease;
+      box-shadow: 0 18px 40px rgba(0,0,0,.15);
+      animation: fadeIn .5s ease;
     }
 
     h1 {
       margin: 0 0 12px;
-      color: #e74c3c;
       font-size: 22px;
+      color: #e85d75;
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: #666;
+    .text {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #555;
+      min-height: 72px;
       margin-bottom: 20px;
     }
 
-    .content {
-      font-size: 18px;
-      color: #333;
-      min-height: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1.6;
-      padding: 10px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
+    .count {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 18px;
     }
 
     button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 999px;
       border: none;
-      font-size: 15px;
+      background: linear-gradient(135deg, #ff6b81, #ff4757);
+      color: #fff;
+      font-size: 16px;
+      padding: 12px 28px;
+      border-radius: 999px;
       cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,71,87,.35);
     }
 
-    .draw {
-      background: #ff6f61;
-      color: white;
-    }
-
-    .drink {
-      background: #f1c40f;
-      color: #333;
-    }
-
-    .disabled {
-      background: #ccc;
-      color: #666;
-      cursor: not-allowed;
-    }
-
-    .count {
-      margin-top: 14px;
-      font-size: 13px;
-      color: #888;
+    button:active {
+      transform: scale(.96);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -96,18 +71,53 @@
 
 <body>
   <div class="card">
-    <h1>💗 心跳回声</h1>
-    <div class="subtitle">微醺时刻，让心靠近一点</div>
-
-    <div class="content" id="content">
-      今晚的气氛，适合抽一张牌。
+    <h1>🍷 情侣微醺抽卡</h1>
+    <div id="text" class="text">
+      准备好了吗？<br>点一下，抽一张今晚的心动指令 💕
     </div>
+    <div id="count" class="count">已抽：0 张</div>
+    <button id="btn">抽一张卡</button>
+  </div>
 
-    <div class="actions">
-      <button class="draw" id="drawBtn">抽一张牌</button>
-      <button class="drink" id="drinkBtn">🍷 喝一口</button>
-    </div>
+  <script>
+    const cards = [
+      "靠近一点，轻声告诉对方：我现在有点想你。",
+      "对视 10 秒，不许说话。",
+      "给对方一个拥抱，持续到你们都笑出来为止。",
+      "说一句你平时不好意思说的暧昧话。",
+      "轻轻摸一下对方的头，说一句安抚的话。",
+      "选择一个身体部位，轻轻触碰 3 秒。",
+      "贴近耳边，说一句只属于今晚的秘密。",
+      "一起喝一口酒，然后对视。",
+      "夸对方一个你平时很少说出口的优点。",
+      "慢慢靠近，停在只差一点点的位置。"
+    ];
 
+    let deck = [];
+    let count = 0;
+
+    const textEl = document.getElementById("text");
+    const countEl = document.getElementById("count");
+    const btn = document.getElementById("btn");
+
+    function shuffle() {
+      deck = [...cards].sort(() => Math.random() - 0.5);
+    }
+
+    shuffle();
+
+    btn.onclick = () => {
+      if (deck.length === 0) {
+        shuffle();
+      }
+      const card = deck.pop();
+      count++;
+      textEl.innerText = card;
+      countEl.innerText = `已抽：${count} 张`;
+    };
+  </script>
+</body>
+</html>
     <div class="count" id="count">
       今晚已抽：0 张
     </div>
