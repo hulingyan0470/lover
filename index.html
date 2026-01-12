@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>情侣升温 ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+                   "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      padding: 30px 25px;
+      width: 85%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #e25555;
+      font-size: 26px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    button {
+      margin-top: 22px;
+      padding: 12px 26px;
+      font-size: 16px;
+      border: none;
+      border-radius: 26px;
+      background: #e25555;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(226,85,85,0.4);
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>❤️ 情侣升温 ❤️</h1>
+    <p id="text">
+      今天也要记得<br>
+      温柔地对待彼此。
+    </p>
+    <button onclick="changeText()">点我一下</button>
+  </div>
+
+  <script>
+    const words = [
+      "你被珍惜，本身就很重要。",
+      "爱不是用力，是靠近。",
+      "慢慢来，我们会走很远。",
+      "今天也值得被温柔以待。",
+      "你在，我就安心。"
+    ];
+
+    function changeText() {
+      const i = Math.floor(Math.random() * words.length);
+      document.getElementById("text").innerText = words[i];
+    }
+  </script>
+</body>
+</html>
